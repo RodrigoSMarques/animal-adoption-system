@@ -1,0 +1,26 @@
+<div class="animal-card" [routerLink]="['/animais', animal.objectId]">
+  <div class="card-image">
+    <img [src]="mainPhoto" [alt]="animal.nome" />
+    <span class="badge-especie">{{ animal.especie }}</span>
+  </div>
+  <div class="card-content">
+    <h3>{{ animal.nome }}</h3>
+    <div class="card-info">
+      <span class="info-item">
+        <span class="icon">📍</span>
+        {{ animal.cidade }}, {{ animal.estado }}
+      </span>
+      <span class="info-item">
+        <span class="icon">🎂</span>
+        {{ animalAge }}
+      </span>
+      <span class="info-item">
+        <span class="icon">{{ animal.sexo === 'macho' ? '♂' : '♀' }}</span>
+        {{ animal.sexo | titlecase }}
+      </span>
+    </div>
+    <div class="card-description">
+      {{ animal.descricao | slice:0:100 }}{{ animal.descricao.length > 100 ? '...' : '' }}
+    </div>
+  </div>
+</div>

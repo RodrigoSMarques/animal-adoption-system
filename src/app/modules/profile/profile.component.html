@@ -1,0 +1,154 @@
+<div class="profile-container">
+  <div class="container">
+    <h1>Meu Perfil</h1>
+
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="user-avatar">
+          <span class="avatar-icon">👤</span>
+        </div>
+        <div class="user-info">
+          <h2>{{ currentUser?.username }}</h2>
+          <p class="user-type">{{ currentUser?.userType === 'doador' ? 'Doador' : 'Adotante' }}</p>
+        </div>
+      </div>
+
+      <div class="profile-details" *ngIf="!editMode">
+        <div class="detail-item">
+          <strong>Email:</strong>
+          <span>{{ currentUser?.email }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Telefone:</strong>
+          <span>{{ currentUser?.telefone }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Localização:</strong>
+          <span>{{ currentUser?.cidade }}, {{ currentUser?.estado }}</span>
+        </div>
+        <button class="btn btn-edit" (click)="enableEditMode()">
+          Editar Perfil
+        </button>
+      </div>
+
+      <div class="profile-edit" *ngIf="editMode">
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input
+            type="tel"
+            id="telefone"
+            [(ngModel)]="updatedUser.telefone"
+            class="form-control"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input
+              type="text"
+              id="cidade"
+              [(ngModel)]="updatedUser.cidade"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <input
+              type="text"
+              id="estado"
+              [(ngModel)]="updatedUser.estado"
+              class="form-control"
+              maxlength="2"
+            />
+          </div>
+        </div>
+        <div class="edit-actions">
+          <button class="btn btn-cancel" (click)="cancelEdit()">
+            Cancelar
+          </button>
+          <button class="btn btn-save" (click)="saveProfile()">
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section" *ngIf="authService.isDoador()">
+      <div class="section-header">
+        <h2>Meus Animais Cadastrados</h2>
+        <a routerLink="/animais/cadastrar" class="btn btn-add">+ Cadastrar Novo</a>
+      </div>
+
+      <app-loading *ngIf="loading"></app-loading>
+
+      <div class="animals-grid" *ngIf="!loading && myAnimals.length > 0">
+        <div class="animal-card-wrapper" *ngFor="let animal of myAnimals">
+          <app-animal-card [animal]="animal"></app-animal-card>
+          <button class="btn-delete" (click)="deleteAnimal(animal.objectId!)">
+            Remover
+          </button>
+        </div>
+      </div>
+
+      <div class="no-data" *ngIf="!loading && myAnimals.length === 0">
+        <p>Você ainda não cadastrou nenhum animal.</p>
+        <a routerLink="/animais/cadastrar" class="btn btn-primary">Cadastrar Primeiro Animal</a>
+      </div>
+    </div>
+
+    <div class="profile-section" *ngIf="authService.isDoador()">
+      <h2>Contatos Recebidos</h2>
+
+      <app-loading *ngIf="loading"></app-loading>
+
+      <div class="contacts-list" *ngIf="!loading && receivedContacts.length > 0">
+        <div class="contact-card" *ngFor="let contact of receivedContacts">
+          <div class="contact-header">
+            <h3>{{ contact.animal.nome }}</h3>
+            <span class="contact-date">{{ contact.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="contact-info">
+            <p><strong>De:</strong> {{ contact.adotante.username }}</p>
+            <p><strong>Telefone:</strong> {{ contact.adotante.telefone }}</p>
+          </div>
+          <div class="contact-message">
+            <p><strong>Mensagem:</strong></p>
+            <p>{{ contact.mensagem }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-data" *ngIf="!loading && receivedContacts.length === 0">
+        <p>Você ainda não recebeu nenhum contato.</p>
+      </div>
+    </div>
+
+    <div class="profile-section" *ngIf="authService.isAdotante()">
+      <h2>Meus Contatos Realizados</h2>
+
+      <app-loading *ngIf="loading"></app-loading>
+
+      <div class="contacts-list" *ngIf="!loading && myContacts.length > 0">
+        <div class="contact-card" *ngFor="let contact of myContacts">
+          <div class="contact-header">
+            <h3>{{ contact.animal.nome }}</h3>
+            <span class="contact-date">{{ contact.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="contact-info">
+            <p><strong>Doador:</strong> {{ contact.doador.username }}</p>
+            <p><strong>Telefone:</strong> {{ contact.doador.telefone }}</p>
+          </div>
+          <div class="contact-message">
+            <p><strong>Sua mensagem:</strong></p>
+            <p>{{ contact.mensagem }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-data" *ngIf="!loading && myContacts.length === 0">
+        <p>Você ainda não realizou nenhum contato.</p>
+        <a routerLink="/animais" class="btn btn-primary">Ver Animais Disponíveis</a>
+      </div>
+    </div>
+  </div>
+</div>

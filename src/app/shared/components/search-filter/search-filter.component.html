@@ -1,0 +1,124 @@
+<div class="search-filter">
+  <div class="filter-header">
+    <h3>Filtros de Pesquisa</h3>
+    <button class="btn-toggle" (click)="toggleFilters()">
+      {{ showFilters ? 'Ocultar' : 'Mostrar' }} Filtros
+    </button>
+  </div>
+
+  <div class="filter-content" [class.active]="showFilters">
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="especie">Espécie</label>
+        <select id="especie" [(ngModel)]="filters.especie" class="form-control">
+          <option value="">Todas</option>
+          <option value="cachorro">Cachorro</option>
+          <option value="gato">Gato</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="porte">Porte</label>
+        <select id="porte" [(ngModel)]="filters.porte" class="form-control">
+          <option value="">Todos</option>
+          <option value="pequeno">Pequeno</option>
+          <option value="medio">Médio</option>
+          <option value="grande">Grande</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="sexo">Sexo</label>
+        <select id="sexo" [(ngModel)]="filters.sexo" class="form-control">
+          <option value="">Todos</option>
+          <option value="macho">Macho</option>
+          <option value="femea">Fêmea</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="cidade">Cidade</label>
+        <input
+          type="text"
+          id="cidade"
+          [(ngModel)]="filters.cidade"
+          class="form-control"
+          placeholder="Ex: São Paulo"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="estado">Estado</label>
+        <input
+          type="text"
+          id="estado"
+          [(ngModel)]="filters.estado"
+          class="form-control"
+          placeholder="Ex: SP"
+          maxlength="2"
+        />
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="idadeMin">Idade Mínima</label>
+        <input
+          type="number"
+          id="idadeMin"
+          [(ngModel)]="filters.idadeMin"
+          class="form-control"
+          min="0"
+          placeholder="0"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="idadeMax">Idade Máxima</label>
+        <input
+          type="number"
+          id="idadeMax"
+          [(ngModel)]="filters.idadeMax"
+          class="form-control"
+          min="0"
+          placeholder="15"
+        />
+      </div>
+    </div>
+
+    <div class="filter-location">
+      <div class="checkbox-group">
+        <input
+          type="checkbox"
+          id="useLocation"
+          [(ngModel)]="useLocation"
+        />
+        <label for="useLocation">Usar minha localização</label>
+      </div>
+
+      <div class="filter-group" *ngIf="useLocation">
+        <label for="raio">Raio (km)</label>
+        <input
+          type="number"
+          id="raio"
+          [(ngModel)]="raio"
+          class="form-control"
+          min="1"
+          max="500"
+        />
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn btn-primary" (click)="applyFilters()">
+        Aplicar Filtros
+      </button>
+      <button class="btn btn-secondary" (click)="clearFilters()">
+        Limpar
+      </button>
+    </div>
+  </div>
+</div>

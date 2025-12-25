@@ -1,0 +1,81 @@
+<div class="home-container">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>🐾 Adote um Amigo</h1>
+      <p class="hero-subtitle">
+        Encontre seu novo companheiro e transforme vidas através da adoção responsável
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/animais" class="btn btn-primary">Ver Animais</a>
+        <a *ngIf="!authService.isAuthenticated()" routerLink="/register" class="btn btn-secondary">
+          Cadastre-se
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="features-container">
+      <h2>Como Funciona</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Pesquise</h3>
+          <p>Encontre o animal ideal usando nossos filtros de pesquisa por localização, espécie, porte e muito mais.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Entre em Contato</h3>
+          <p>Envie uma mensagem diretamente para o doador e tire todas as suas dúvidas sobre o animal.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">❤️</div>
+          <h3>Adote com Amor</h3>
+          <p>Finalize o processo de adoção e ganhe um novo membro na família!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Tem um animal para doar?</h2>
+      <p>Cadastre-se como doador e ajude a encontrar um lar para seu amigo</p>
+      <a 
+        *ngIf="!authService.isAuthenticated()" 
+        routerLink="/register" 
+        class="btn btn-light">
+        Cadastre-se como Doador
+      </a>
+      <a 
+        *ngIf="authService.isAuthenticated() && authService.isDoador()" 
+        routerLink="/animais/cadastrar" 
+        class="btn btn-light">
+        Cadastrar Animal
+      </a>
+    </div>
+  </section>
+
+  <section class="info">
+    <div class="info-container">
+      <h2>Por que adotar?</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-number">1</span>
+          <h3>Salve uma vida</h3>
+          <p>Cada adoção salva a vida de um animal que precisa de um lar.</p>
+        </div>
+        <div class="info-item">
+          <span class="info-number">2</span>
+          <h3>Ganhe um amigo fiel</h3>
+          <p>Animais adotados são extremamente gratos e leais aos seus tutores.</p>
+        </div>
+        <div class="info-item">
+          <span class="info-number">3</span>
+          <h3>Faça a diferença</h3>
+          <p>Adotar é um ato de amor que transforma vidas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

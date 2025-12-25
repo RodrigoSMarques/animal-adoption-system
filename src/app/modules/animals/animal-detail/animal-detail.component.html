@@ -1,0 +1,111 @@
+<div class="animal-detail-container">
+  <div class="container">
+    <app-loading *ngIf="loading"></app-loading>
+
+    <div class="error-message" *ngIf="errorMessage && !loading">
+      {{ errorMessage }}
+      <br>
+      <a routerLink="/animais" class="btn-back">Voltar para lista</a>
+    </div>
+
+    <div class="animal-detail" *ngIf="animal && !loading">
+      <button routerLink="/animais" class="btn-back-link">← Voltar</button>
+
+      <div class="detail-content">
+        <div class="photo-gallery">
+          <div class="main-photo">
+            <img [src]="currentPhoto" [alt]="animal.nome" />
+            <button 
+              *ngIf="animal.fotos.length > 1" 
+              class="nav-btn prev-btn" 
+              (click)="previousPhoto()">
+              ‹
+            </button>
+            <button 
+              *ngIf="animal.fotos.length > 1" 
+              class="nav-btn next-btn" 
+              (click)="nextPhoto()">
+              ›
+            </button>
+          </div>
+          <div class="photo-thumbnails" *ngIf="animal.fotos.length > 1">
+            <img 
+              *ngFor="let foto of animal.fotos; let i = index"
+              [src]="foto" 
+              [alt]="'Foto ' + (i + 1)"
+              [class.active]="i === currentPhotoIndex"
+              (click)="currentPhotoIndex = i"
+            />
+          </div>
+        </div>
+
+        <div class="animal-info">
+          <h1>{{ animal.nome }}</h1>
+          
+          <div class="info-badges">
+            <span class="badge badge-especie">{{ animal.especie }}</span>
+            <span class="badge badge-porte">{{ animal.porte }}</span>
+            <span class="badge badge-sexo">{{ animal.sexo }}</span>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Raça:</strong>
+              <span>{{ animal.raca }}</span>
+            </div>
+            <div class="info-item">
+              <strong>Idade:</strong>
+              <span>{{ animalAge }}</span>
+            </div>
+            <div class="info-item">
+              <strong>Localização:</strong>
+              <span>{{ animal.cidade }}, {{ animal.estado }}</span>
+            </div>
+          </div>
+
+          <div class="description">
+            <h3>Sobre {{ animal.nome }}</h3>
+            <p>{{ animal.descricao }}</p>
+          </div>
+
+          <div class="doador-info" *ngIf="animal.doador">
+            <h3>Informações do Doador</h3>
+            <p><strong>Nome:</strong> {{ animal.doador.username }}</p>
+            <p><strong>Telefone:</strong> {{ animal.doador.telefone }}</p>
+          </div>
+
+          <div class="actions">
+            <button 
+              *ngIf="authService.isAuthenticated() && !authService.isDoador()" 
+              class="btn btn-primary"
+              (click)="toggleContactForm()">
+              {{ showContactForm ? 'Cancelar' : 'Entrar em Contato' }}
+            </button>
+            <div *ngIf="!authService.isAuthenticated()" class="login-message">
+              <a routerLink="/login" class="btn btn-secondary">Faça login para entrar em contato</a>
+            </div>
+          </div>
+
+          <div class="contact-form" *ngIf="showContactForm">
+            <h3>Enviar Mensagem</h3>
+            <textarea
+              [(ngModel)]="contactMessage"
+              placeholder="Digite sua mensagem para o doador..."
+              rows="5"
+              class="form-control"
+            ></textarea>
+            <button 
+              class="btn btn-send" 
+              (click)="sendContact()"
+              [disabled]="!contactMessage.trim() || sendingMessage">
+              {{ sendingMessage ? 'Enviando...' : 'Enviar Mensagem' }}
+            </button>
+            <div class="success-message" *ngIf="messageSent">
+              ✓ Mensagem enviada com sucesso!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
