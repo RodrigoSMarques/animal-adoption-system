@@ -16,7 +16,7 @@ export class AnimalCardComponent {
   get mainPhoto(): string {
     return this.animal.fotos && this.animal.fotos.length > 0 
       ? this.animal.fotos[0] 
-      : 'assets/images/no-image.png';
+      : 'assets/images/no-image.svg';
   }
 
   get animalAge(): string {

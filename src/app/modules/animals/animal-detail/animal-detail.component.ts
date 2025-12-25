@@ -96,7 +96,7 @@ export class AnimalDetailComponent implements OnInit {
     if (this.animal && this.animal.fotos.length > 0) {
       return this.animal.fotos[this.currentPhotoIndex];
     }
-    return 'assets/images/no-image.png';
+    return 'assets/images/no-image.svg';
   }
 
   get animalAge(): string {
