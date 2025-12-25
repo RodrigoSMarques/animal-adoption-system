@@ -1,0 +1,26 @@
+<div class="animal-list-container">
+  <div class="container">
+    <h1>Animais para Adoção</h1>
+    
+    <app-search-filter (filterChange)="onFilterChange($event)"></app-search-filter>
+
+    <app-loading *ngIf="loading"></app-loading>
+
+    <div class="error-message" *ngIf="errorMessage && !loading">
+      {{ errorMessage }}
+    </div>
+
+    <div class="animals-grid" *ngIf="!loading && animals.length > 0">
+      <app-animal-card 
+        *ngFor="let animal of animals" 
+        [animal]="animal">
+      </app-animal-card>
+    </div>
+
+    <div class="no-results" *ngIf="!loading && animals.length === 0 && !errorMessage">
+      <div class="no-results-icon">🐕</div>
+      <h2>Nenhum animal encontrado</h2>
+      <p>Tente ajustar os filtros de pesquisa ou volte mais tarde.</p>
+    </div>
+  </div>
+</div>

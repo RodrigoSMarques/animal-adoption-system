@@ -1,0 +1,82 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <a routerLink="/" class="navbar-brand">
+      <span class="brand-icon">🐾</span>
+      <span class="brand-text">AdoPet</span>
+    </a>
+
+    <div class="navbar-menu">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+        Início
+      </a>
+      <a routerLink="/animais" routerLinkActive="active" class="nav-link">
+        Animais
+      </a>
+
+      <ng-container *ngIf="currentUser">
+        <a 
+          *ngIf="authService.isDoador()" 
+          routerLink="/animais/cadastrar" 
+          routerLinkActive="active" 
+          class="nav-link">
+          Cadastrar Animal
+        </a>
+        <a routerLink="/perfil" routerLinkActive="active" class="nav-link">
+          Perfil
+        </a>
+        <button (click)="logout()" class="btn-logout">
+          Sair
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="!currentUser">
+        <a routerLink="/login" routerLinkActive="active" class="nav-link">
+          Entrar
+        </a>
+        <a routerLink="/register" routerLinkActive="active" class="btn-register">
+          Cadastrar
+        </a>
+      </ng-container>
+    </div>
+
+    <button class="navbar-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="navbar-mobile" [class.active]="menuOpen">
+    <a routerLink="/" (click)="toggleMenu()" class="nav-link-mobile">
+      Início
+    </a>
+    <a routerLink="/animais" (click)="toggleMenu()" class="nav-link-mobile">
+      Animais
+    </a>
+
+    <ng-container *ngIf="currentUser">
+      <a 
+        *ngIf="authService.isDoador()" 
+        routerLink="/animais/cadastrar" 
+        (click)="toggleMenu()" 
+        class="nav-link-mobile">
+        Cadastrar Animal
+      </a>
+      <a routerLink="/perfil" (click)="toggleMenu()" class="nav-link-mobile">
+        Perfil
+      </a>
+      <button (click)="logout()" class="btn-logout-mobile">
+        Sair
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="!currentUser">
+      <a routerLink="/login" (click)="toggleMenu()" class="nav-link-mobile">
+        Entrar
+      </a>
+      <a routerLink="/register" (click)="toggleMenu()" class="btn-register-mobile">
+        Cadastrar
+      </a>
+    </ng-container>
+  </div>
+</nav>
